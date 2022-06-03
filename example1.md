@@ -7,6 +7,19 @@ example1 主要过一遍制作流程：
 4. 如何调试验证
 
 
+## 生成 example1 模板
+
+```shell
+mkdir -p example1
+pushd example1
+if [ ! -f go.mod ]; then
+    go mod init example1
+fi
+kubebuilder init
+kubebuilder create api --group demo --version v1 --kind Example1 --resource true --controller true --namespaced true
+popd
+```
+
 ## 填写 api/v1/example1_types.go
 
 这里的例子，定义一个简单 CRD ，主要过一遍流程
