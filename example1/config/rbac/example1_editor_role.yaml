@@ -1,0 +1,24 @@
+# permissions for end users to edit example1s.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: example1-editor-role
+rules:
+- apiGroups:
+  - demo.my.domain
+  resources:
+  - example1s
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - demo.my.domain
+  resources:
+  - example1s/status
+  verbs:
+  - get

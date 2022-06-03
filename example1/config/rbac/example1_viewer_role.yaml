@@ -1,0 +1,20 @@
+# permissions for end users to view example1s.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: example1-viewer-role
+rules:
+- apiGroups:
+  - demo.my.domain
+  resources:
+  - example1s
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - demo.my.domain
+  resources:
+  - example1s/status
+  verbs:
+  - get
