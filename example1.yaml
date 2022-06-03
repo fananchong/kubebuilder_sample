@@ -1,0 +1,8 @@
+apiVersion: demo.my.domain/v1
+kind: Example1
+metadata:
+  name: example-1
+  namespace: default
+spec:
+  custom1: xxxx
+  custom2: 10

@@ -25,11 +25,14 @@ import (
 
 // Example1Spec defines the desired state of Example1
 type Example1Spec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	//+kubebuilder:validation:Required
+	//+kubebuilder:validation:Type=string
+	Custom1 string `json:"custom1,omitempty"`
 
-	// Foo is an example field of Example1. Edit example1_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	//+kubebuilder:validation:Required
+	//+kubebuilder:validation:Type=integer
+	//+kubebuilder:validation:Minimum=0
+	Custom2 int `json:"custom2,omitempty"`
 }
 
 // Example1Status defines the observed state of Example1

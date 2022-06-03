@@ -18,13 +18,17 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/pingcap/errors"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	demov1 "example1/api/v1"
+	v1 "example1/api/v1"
 )
 
 // Example1Reconciler reconciles a Example1 object
@@ -47,10 +51,18 @@ type Example1Reconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.11.2/pkg/reconcile
 func (r *Example1Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
-
-	// TODO(user): your logic here
-
+	logger := log.FromContext(ctx)
+	example := &v1.Example1{}
+	err := r.Get(ctx, types.NamespacedName{Name: req.Name, Namespace: req.Namespace}, example)
+	if err != nil {
+		if errors.IsNotFound(err) {
+			logger.Info(fmt.Sprintf("[delete] Namespace:%v Name:%v", req.Namespace, req.Name))
+			return ctrl.Result{}, nil
+		}
+		logger.Error(err, "Error occurred while fetching the resource")
+		return ctrl.Result{}, err
+	}
+	logger.Info(fmt.Sprintf("[apply] Namespace:%v Name:%v custom1:%v custom2:%v", example.Namespace, example.Name, example.Spec.Custom1, example.Spec.Custom2))
 	return ctrl.Result{}, nil
 }
 
