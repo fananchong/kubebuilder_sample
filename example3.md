@@ -23,7 +23,7 @@ popd
 ```go
 type Example3Spec struct {
 	// +kubebuilder:validation:Minimum=1
-	InstanceNum *int64 `json:"instanceNum,omitempty"`
+	InstanceNum *int32 `json:"instanceNum,omitempty"`
 }
 type Example3Status struct {
 	// +optional
@@ -42,29 +42,74 @@ make manifests
 ## 填写 controllers/example3_controller.go
 
 
+需要修改 3 处：
+
+**1. 添加访问 Deployment 资源权限**
 ```go
-func (r *Example2Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
-	example := &v1.Example3{}
-	err := r.Get(ctx, req.NamespacedName, example)
-	if err != nil {
+//+kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=apps,resources=deployments/status,verbs=get
+```
+
+
+**2. 实现 Reconcile 函数**
+
+```go
+func (r *Example3Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+	log := log.FromContext(ctx)
+
+	// 1. 获取 Example3 CRD 信息
+	var example demov1.Example3
+	if err := r.Get(ctx, req.NamespacedName, &example); err != nil {
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	example.Status.CustomStatus1 = "xxxxxxxxxx"
-	if example.Status.CustomStatus2 == nil {
-		example.Status.CustomStatus2 = new(int32)
-	}
-	*(example.Status.CustomStatus2) = 1111111
-	if err := r.Status().Update(ctx, example); err != nil {
+
+	// 2. 关联 Deployment 资源定义
+	deployment := getDeploymentDef(&example)
+	deployment.Spec.Replicas = example.Spec.InstanceNum
+	if err := controllerutil.SetControllerReference(&example, deployment, r.Scheme); err != nil {
 		return ctrl.Result{}, err
 	}
-	return ctrl.Result{}, nil
+
+	// 3. 扩容 Deployment 达到预期
+	foundDeployment := &kapps.Deployment{}
+	err := r.Get(ctx, types.NamespacedName{Name: deployment.Name, Namespace: deployment.Namespace}, foundDeployment)
+	if err != nil && errors.IsNotFound(err) {
+		log.V(1).Info("Creating Deployment", "deployment", deployment.Name)
+		err = r.Create(ctx, deployment)
+	} else if err == nil {
+		if foundDeployment.Spec.Replicas != deployment.Spec.Replicas {
+			foundDeployment.Spec.Replicas = deployment.Spec.Replicas
+			log.V(1).Info("Updating Deployment", "deployment", deployment.Name)
+			err = r.Update(ctx, foundDeployment)
+		}
+	}
+
+	// 4. 更新 Example3 CRD 状态（略）
+
+	return ctrl.Result{}, err
+}
+```
+
+代码分析，看注释
+
+**3. 调整下 SetupWithManager 函数**
+
+```go
+func (r *Example3Reconciler) SetupWithManager(mgr ctrl.Manager) error {
+	return ctrl.NewControllerManagedBy(mgr).
+		For(&demov1.Example3{}).
+		Owns(&kapps.Deployment{}).
+		Complete(r)
 }
 ```
 
 代码分析：
-- r.Status().Update(ctx, example) 更新 example3 资源的状态
+- Owns(&kapps.Deployment{}) 需要添加这行
 
+
+**参考资料**
+
+该例子官方文档： [https://book.kubebuilder.io/reference/watching-resources/operator-managed.html](https://book.kubebuilder.io/reference/watching-resources/operator-managed.html)
 
 ## 安装 CRD Example3
 
@@ -86,7 +131,5 @@ kubectl get crd | grep example3
 2. 使用这个 CRD
     ```shell
     kubectl apply -f config/samples/demo_v1_example3.yaml
-    kubectl get example3s -o yaml
-	kubectl describe -f config/samples/demo_v1_example3.yaml
-    kubectl delete -f config/samples/demo_v1_example3.yaml
+    kubectl get po -A | grep example3
     ```

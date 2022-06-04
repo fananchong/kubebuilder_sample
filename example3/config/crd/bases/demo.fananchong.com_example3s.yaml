@@ -36,7 +36,7 @@ spec:
             description: Example3Spec defines the desired state of Example3
             properties:
               instanceNum:
-                format: int64
+                format: int32
                 minimum: 1
                 type: integer
             type: object

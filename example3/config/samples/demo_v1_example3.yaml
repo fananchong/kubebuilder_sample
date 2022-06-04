@@ -3,4 +3,4 @@ kind: Example3
 metadata:
   name: example3-sample
 spec:
-  # TODO(user): Add fields here
+  instanceNum: 2

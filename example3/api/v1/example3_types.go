@@ -26,7 +26,7 @@ import (
 // Example3Spec defines the desired state of Example3
 type Example3Spec struct {
 	// +kubebuilder:validation:Minimum=1
-	InstanceNum *int64 `json:"instanceNum,omitempty"`
+	InstanceNum *int32 `json:"instanceNum,omitempty"`
 }
 
 // Example3Status defines the observed state of Example3
