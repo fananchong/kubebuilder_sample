@@ -12,9 +12,7 @@ example1 主要过一遍制作流程：
 ```shell
 mkdir -p example1
 pushd example1
-if [ ! -f go.mod ]; then
-    go mod init example1
-fi
+go mod init example1
 kubebuilder init
 kubebuilder create api --group demo --version v1 --kind Example1 --resource true --controller true --namespaced true
 popd
@@ -49,7 +47,7 @@ type Example1Spec struct {
 	//+kubebuilder:validation:Required
 	//+kubebuilder:validation:Type=integer
 	//+kubebuilder:validation:Minimum=0
-	Custom2 int `json:"custom2,omitempty"`
+	Custom2 *int32 `json:"custom2,omitempty"`
 }
 ```
 
@@ -108,6 +106,7 @@ kubectl get crd
 
 1. [可选] 执行 example1 ，能实时查看 CRD 的 log
     ```shell
+	go build
     ./example1 --metrics-bind-address=":7070" --health-probe-bind-address=":7071"
     ```
 

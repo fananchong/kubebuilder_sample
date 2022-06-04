@@ -32,7 +32,7 @@ type Example1Spec struct {
 	//+kubebuilder:validation:Required
 	//+kubebuilder:validation:Type=integer
 	//+kubebuilder:validation:Minimum=0
-	Custom2 int `json:"custom2,omitempty"`
+	Custom2 *int32 `json:"custom2,omitempty"`
 }
 
 // Example1Status defines the observed state of Example1
