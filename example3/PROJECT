@@ -1,0 +1,16 @@
+domain: fananchong.com
+layout:
+- go.kubebuilder.io/v3
+projectName: example3
+repo: example3
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: fananchong.com
+  group: demo
+  kind: Example3
+  path: example3/api/v1
+  version: v1
+version: "3"

@@ -1,0 +1,24 @@
+# permissions for end users to edit example3s.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: example3-editor-role
+rules:
+- apiGroups:
+  - demo.fananchong.com
+  resources:
+  - example3s
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - demo.fananchong.com
+  resources:
+  - example3s/status
+  verbs:
+  - get
