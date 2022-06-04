@@ -104,7 +104,7 @@ kubectl get crd
 
 ## 调试验证
 
-1. [可选] 执行 example1 ，能实时查看 CRD 的 log
+1. 执行 example1 ，能实时查看 CRD 的 log
     ```shell
 	go build
     ./example1 --metrics-bind-address=":7070" --health-probe-bind-address=":7071"
