@@ -1,4 +1,4 @@
-apiVersion: demo.my.domain/v1
+apiVersion: demo.fananchong.com/v1
 kind: Example2
 metadata:
   name: example2-sample

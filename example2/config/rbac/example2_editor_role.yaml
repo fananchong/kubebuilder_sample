@@ -5,7 +5,7 @@ metadata:
   name: example2-editor-role
 rules:
 - apiGroups:
-  - demo.my.domain
+  - demo.fananchong.com
   resources:
   - example2s
   verbs:
@@ -17,7 +17,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - demo.my.domain
+  - demo.fananchong.com
   resources:
   - example2s/status
   verbs:

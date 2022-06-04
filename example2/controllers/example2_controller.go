@@ -33,9 +33,9 @@ type Example2Reconciler struct {
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=demo.my.domain,resources=example2s,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=demo.my.domain,resources=example2s/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=demo.my.domain,resources=example2s/finalizers,verbs=update
+//+kubebuilder:rbac:groups=demo.fananchong.com,resources=example2s,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=demo.fananchong.com,resources=example2s/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=demo.fananchong.com,resources=example2s/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.

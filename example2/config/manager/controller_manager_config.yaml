@@ -8,4 +8,4 @@ webhook:
   port: 9443
 leaderElection:
   leaderElect: true
-  resourceName: e1588169.my.domain
+  resourceName: e1588169.fananchong.com

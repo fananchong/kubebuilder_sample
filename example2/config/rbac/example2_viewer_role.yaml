@@ -5,7 +5,7 @@ metadata:
   name: example2-viewer-role
 rules:
 - apiGroups:
-  - demo.my.domain
+  - demo.fananchong.com
   resources:
   - example2s
   verbs:
@@ -13,7 +13,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - demo.my.domain
+  - demo.fananchong.com
   resources:
   - example2s/status
   verbs:
