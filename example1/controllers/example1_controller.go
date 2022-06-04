@@ -22,7 +22,6 @@ import (
 
 	"github.com/pingcap/errors"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -53,7 +52,7 @@ type Example1Reconciler struct {
 func (r *Example1Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)
 	example := &v1.Example1{}
-	err := r.Get(ctx, types.NamespacedName{Name: req.Name, Namespace: req.Namespace}, example)
+	err := r.Get(ctx, req.NamespacedName, example)
 	if err != nil {
 		if errors.IsNotFound(err) {
 			logger.Info(fmt.Sprintf("[delete] Namespace:%v Name:%v", req.Namespace, req.Name))
