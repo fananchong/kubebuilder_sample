@@ -6,7 +6,7 @@
 | :------------------------ | :--------------------------- |
 | [example1](./example1.md) | 演示制作流程、 Spec 定义实现 |
 | [example2](./example2.md) | Status 定义实现              |
-
+| [example3](./example3.md) | 控制 K8S 内置资源            |
 
 ## 依赖环境
 

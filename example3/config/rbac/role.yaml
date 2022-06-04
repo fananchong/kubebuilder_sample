@@ -1,0 +1,33 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - demo.fananchong.com
+  resources:
+  - example3s
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - demo.fananchong.com
+  resources:
+  - example3s/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - demo.fananchong.com
+  resources:
+  - example3s/status
+  verbs:
+  - get
+  - patch
+  - update

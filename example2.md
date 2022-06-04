@@ -14,7 +14,7 @@ kubebuilder create api --group demo --version v1 --kind Example2 --resource true
 popd
 ```
 
-## 填写 api/v1/example1_types.go
+## 填写 api/v1/example2_types.go
 
 目标，能更新状态值
 
@@ -37,7 +37,7 @@ make manifests
 会自动生成对应的配置到 config 目录下 `config/crd/bases/demo.fananchong.com_example2s.yaml`
 
 
-## 填写 controllers/example1_controller.go
+## 填写 controllers/example2_controller.go
 
 
 ```go

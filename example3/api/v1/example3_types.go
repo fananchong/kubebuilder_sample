@@ -25,17 +25,14 @@ import (
 
 // Example3Spec defines the desired state of Example3
 type Example3Spec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of Example3. Edit example3_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// +kubebuilder:validation:Minimum=1
+	InstanceNum *int64 `json:"instanceNum,omitempty"`
 }
 
 // Example3Status defines the observed state of Example3
 type Example3Status struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +optional
+	RealInstanceNum *int32 `json:"realInstanceNum,omitempty"`
 }
 
 //+kubebuilder:object:root=true
