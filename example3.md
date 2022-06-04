@@ -104,7 +104,7 @@ func (r *Example3Reconciler) SetupWithManager(mgr ctrl.Manager) error {
 ```
 
 代码分析：
-- Owns(&kapps.Deployment{}) 需要添加这行
+- Owns(&kapps.Deployment{}) 需要添加这行，才能操作 Deployment 对象
 
 
 **参考资料**
