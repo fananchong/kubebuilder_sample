@@ -2,7 +2,10 @@
 
 一些使用 kubebuilder 自定义 CRD 的例子
 
-- [example1](./example1.md)
+| 例子                      | 说明                         |
+| :------------------------ | :--------------------------- |
+| [example1](./example1.md) | 演示制作流程、 Spec 定义实现 |
+| [example2](./example2.md) | Status 定义实现              |
 
 
 ## 依赖环境
