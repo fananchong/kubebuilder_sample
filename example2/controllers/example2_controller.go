@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	v1 "example2/api/v1"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -48,9 +49,19 @@ type Example2Reconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.11.2/pkg/reconcile
 func (r *Example2Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
-
-	// TODO(user): your logic here
-
+	example := &v1.Example2{}
+	err := r.Get(ctx, req.NamespacedName, example)
+	if err != nil {
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+	example.Status.CustomStatus1 = "xxxxxxxxxx"
+	if example.Status.CustomStatus2 == nil {
+		example.Status.CustomStatus2 = new(int32)
+	}
+	*(example.Status.CustomStatus2) = 1111111
+	if err := r.Status().Update(ctx, example); err != nil {
+		return ctrl.Result{}, err
+	}
 	return ctrl.Result{}, nil
 }
 

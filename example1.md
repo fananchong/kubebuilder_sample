@@ -106,8 +106,8 @@ kubectl get crd
 
 1. 执行 example1 ，能实时查看 CRD 的 log
     ```shell
-	go build
-    ./example1 --metrics-bind-address=":7070" --health-probe-bind-address=":7071"
+	make build
+    ./bin/manager  --metrics-bind-address=":7070" --health-probe-bind-address=":7071"
     ```
 
 2. 使用这个 CRD
