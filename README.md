@@ -7,6 +7,8 @@
 | [example1](./example1.md) | 演示制作流程、 Spec 定义实现 |
 | [example2](./example2.md) | Status 定义实现              |
 | [example3](./example3.md) | 控制 K8S 内置资源            |
+| [example4](./example4.md) | 正式部署 CRD manager         |
+
 
 ## 依赖环境
 
@@ -54,3 +56,24 @@ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 go version
 ```
+
+
+## 参考资料
+
+- kubebuilder 官方文档： [https://book.kubebuilder.io/introduction.html](https://book.kubebuilder.io/introduction.html)
+- kubebuilder 官方文档中文翻译（落后）： [https://cloudnative.to/kubebuilder/introduction.html](https://cloudnative.to/kubebuilder/introduction.html)
+
+
+## TODO
+
+还有不少例子可以学习演练，后续有时间再补上：
+- webhook 例子
+- Multi-Version API 例子
+- Multi-Group 例子
+- Finalizers 例子
+
+以上都是很好理解的，只是没练下
+
+以及还有暂时没理解或使用场景的：
+- Watching Externally Managed Resources 例子
+- Plugins 例子
